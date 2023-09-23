@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bmw.seckill.dao.SeckillProductsDao">
+
+    <resultMap id="SeckillProducts" type="com.bmw.seckill.model.SeckillProducts">
+        <result column="name" property="name"/>
+        <result column="count" property="count"/>
+        <result column="saled" property="saled"/>
+        <result column="create_time" property="createTime"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="start_buy_time" property="startBuyTime"/>
+        <result column="updated_time" property="updatedTime"/>
+        <result column="product_desc" property="productDesc"/>
+        <result column="status" property="status"/>
+        <result column="memo" property="memo"/>
+        <result column="product_period_key" property="productPeriodKey"/>
+    </resultMap>
+
+    <!-- 通用查询结果列-->
+    <sql id="Base_Column_List">
+        id
+        ,
+        name,
+        count,
+        saled,
+        create_time,
+        is_deleted,
+        start_buy_time,
+        updated_time,
+        product_desc,
+        status,
+        memo,
+        product_period_key
+    </sql>
+
+    <!-- 查询（根据主键ID查询） -->
+    <select id="selectByPrimaryKey" resultMap="SeckillProducts" parameterType="java.lang.Long">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM seckill_products
+        WHERE id = #{id}
+    </select>
+
+    <!--删除：根据主键ID删除-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE
+        FROM seckill_products
+        WHERE id = #{id}
+    </delete>
+
+    <!-- 添加 -->
+    <insert id="insert" parameterType="com.bmw.seckill.model.SeckillProducts">
+        INSERT INTO seckill_products
+        (
+        id,
+        name,
+        count,
+        saled,
+        create_time,
+        is_deleted,
+        start_buy_time,
+        updated_time,
+        product_desc,
+        status,
+        memo,
+        product_period_key
+        )
+        VALUES
+        (
+        #{id},
+        #{name},
+        #{count},
+        #{saled},
+        #{createTime},
+        #{isDeleted},
+        #{startBuyTime},
+        #{updatedTime},
+        #{productDesc},
+        #{status},
+        #{memo},
+        #{productPeriodKey}
+        )
+        <selectKey keyProperty="id" resultType="Long" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <!-- 修 改-->
+    <update id="updateByPrimaryKeySelective" parameterType="com.bmw.seckill.model.SeckillProducts">
+        UPDATE seckill_products
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="count != null">
+                count = #{count},
+            </if>
+            <if test="saled != null">
+                saled = #{saled},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted},
+            </if>
+            <if test="startBuyTime != null">
+                start_buy_time = #{startBuyTime},
+            </if>
+            <if test="updatedTime != null">
+                updated_time = #{updatedTime},
+            </if>
+            <if test="productDesc != null and productDesc != ''">
+                product_desc = #{productDesc},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="memo != null and memo != ''">
+                memo = #{memo},
+            </if>
+            <if test="productPeriodKey != null and productPeriodKey != ''">
+                product_period_key = #{productPeriodKey},
+            </if>
+
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- list4Page 分页查询-->
+    <select id="list4Page" resultMap="SeckillProducts">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from seckill_products
+        where 1=1
+        <if test="record.id != null">
+            and id = #{record.id}
+        </if>
+        <if test="record.name != null and record.name != ''">
+            and name = #{record.name}
+        </if>
+        <if test="record.count != null">
+            and count = #{record.count}
+        </if>
+        <if test="record.saled != null">
+            and saled = #{record.saled}
+        </if>
+        <if test="record.createTime != null">
+            and create_time = #{record.createTime}
+        </if>
+        <if test="record.isDeleted != null">
+            and is_deleted = #{record.isDeleted}
+        </if>
+        <if test="record.startBuyTime != null">
+            and start_buy_time = #{record.startBuyTime}
+        </if>
+        <if test="record.updatedTime != null">
+            and updated_time = #{record.updatedTime}
+        </if>
+        <if test="record.productDesc != null and record.productDesc != ''">
+            and product_desc = #{record.productDesc}
+        </if>
+        <if test="record.status != null">
+            and status = #{record.status}
+        </if>
+        <if test="record.memo != null and record.memo != ''">
+            and memo = #{record.memo}
+        </if>
+        <if test="record.productPeriodKey != null and record.productPeriodKey != ''">
+            and product_period_key = #{record.productPeriodKey}
+        </if>
+        <if test="commonQueryParam != null">
+            <if test="commonQueryParam.order != null ">
+                order by #{commonQueryParam.order}
+                <if test="commonQueryParam.sort != null ">#{commonQueryParam.sort}</if>
+            </if>
+            <if test="commonQueryParam.start != null  and commonQueryParam.pageSize != null">
+                limit #{commonQueryParam.start}, #{commonQueryParam.pageSize}
+            </if>
+        </if>
+    </select>
+    <!-- count 总数-->
+    <select id="count" resultType="int">
+        SELECT
+        count(1)
+        from seckill_products
+        where 1=1
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="name != null and name != ''">
+            and name = #{name}
+        </if>
+        <if test="count != null">
+            and count = #{count}
+        </if>
+        <if test="saled != null">
+            and saled = #{saled}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime}
+        </if>
+        <if test="isDeleted != null">
+            and is_deleted = #{isDeleted}
+        </if>
+        <if test="startBuyTime != null">
+            and start_buy_time = #{startBuyTime}
+        </if>
+        <if test="updatedTime != null">
+            and updated_time = #{updatedTime}
+        </if>
+        <if test="productDesc != null and productDesc != ''">
+            and product_desc = #{productDesc}
+        </if>
+        <if test="status != null">
+            and status = #{status}
+        </if>
+        <if test="memo != null and memo != ''">
+            and memo = #{memo}
+        </if>
+        <if test="productPeriodKey != null and productPeriodKey != ''">
+            and product_period_key = #{productPeriodKey}
+        </if>
+    </select>
+    <!-- list 查询-->
+    <select id="list" resultMap="SeckillProducts">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from seckill_products
+        where 1=1
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="name != null and name != ''">
+            and name = #{name}
+        </if>
+        <if test="count != null">
+            and count = #{count}
+        </if>
+        <if test="saled != null">
+            and saled = #{saled}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime}
+        </if>
+        <if test="isDeleted != null">
+            and is_deleted = #{isDeleted}
+        </if>
+        <if test="startBuyTime != null">
+            and start_buy_time = #{startBuyTime}
+        </if>
+        <if test="updatedTime != null">
+            and updated_time = #{updatedTime}
+        </if>
+        <if test="productDesc != null and productDesc != ''">
+            and product_desc = #{productDesc}
+        </if>
+        <if test="status != null">
+            and status = #{status}
+        </if>
+        <if test="memo != null and memo != ''">
+            and memo = #{memo}
+        </if>
+        <if test="productPeriodKey != null and productPeriodKey != ''">
+            and product_period_key = #{productPeriodKey}
+        </if>
+    </select>
+    <select id="selectForUpdate" resultMap="SeckillProducts">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from seckill_products
+        where id = #{id}
+        for update
+    </select>
+
+    <update id="updateStockByOptimistic">
+        UPDATE seckill_products
+        SET saled = saled + 1
+        WHERE id = #{id}
+          and saled &lt; `count`
+    </update>
+    <update id="decrStock">
+        UPDATE seckill_products
+        SET saled = saled + 1
+        WHERE id = #{id}
+    </update>
+</mapper>

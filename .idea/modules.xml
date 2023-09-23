@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/seckill-parent-避免一人多单1/seckill-admin/seckill-admin.iml" filepath="$PROJECT_DIR$/seckill-parent-避免一人多单1/seckill-admin/seckill-admin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/seckill-parent-避免一人多单1/seckill-common/seckill-common.iml" filepath="$PROJECT_DIR$/seckill-parent-避免一人多单1/seckill-common/seckill-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/seckill-parent-避免一人多单1/seckill-parent.iml" filepath="$PROJECT_DIR$/seckill-parent-避免一人多单1/seckill-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/seckill-parent-bimianyirenduodan1.iml" filepath="$PROJECT_DIR$/.idea/seckill-parent-bimianyirenduodan1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/seckill-parent-避免一人多单1/seckill-service/seckill-service.iml" filepath="$PROJECT_DIR$/seckill-parent-避免一人多单1/seckill-service/seckill-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/seckill-parent-避免一人多单1/seckill-web/seckill-web.iml" filepath="$PROJECT_DIR$/seckill-parent-避免一人多单1/seckill-web/seckill-web.iml" />
+    </modules>
+  </component>
+</project>

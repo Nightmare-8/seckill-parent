@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="seckill-common" />
+        <module name="seckill-web" />
+        <module name="seckill-service" />
+        <module name="seckill-admin" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="seckill-admin" target="1.8" />
+      <module name="seckill-common" target="1.8" />
+      <module name="seckill-parent" target="1.8" />
+      <module name="seckill-service" target="1.8" />
+      <module name="seckill-web" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="seckill-admin" options="-parameters" />
+      <module name="seckill-common" options="-parameters" />
+      <module name="seckill-service" options="-parameters" />
+      <module name="seckill-web" options="-parameters" />
+    </option>
+  </component>
+</project>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bmw.seckill.dao.SeckillAdminDao">
+
+	<resultMap id="SeckillAdmin" type="com.bmw.seckill.model.SeckillAdmin" >
+		<result column="login_name" property="loginName"/>
+		<result column="password" property="password"/>
+		<result column="name" property="name"/>
+		<result column="ip_range" property="ipRange"/>
+		<result column="create_time" property="createTime"/>
+	</resultMap>
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		id,
+		login_name,
+		password,
+		name,
+		ip_range,
+		create_time
+	</sql>
+
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey" resultMap="SeckillAdmin" parameterType="java.lang.Long">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM seckill_admin
+		 WHERE id = #{id}
+	</select>
+
+	<!--删除：根据主键ID删除-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		 DELETE FROM seckill_admin
+		 WHERE id = #{id}
+	</delete>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.bmw.seckill.model.SeckillAdmin" >
+		 INSERT INTO seckill_admin
+ 		(
+			 id,
+			 login_name,
+			 password,
+			 name,
+			 ip_range,
+			 create_time
+		) 
+		 VALUES 
+ 		(
+			 #{id},
+			 #{loginName},
+			 #{password},
+			 #{name},
+			 #{ipRange},
+			 #{createTime}
+ 		) 
+		 <selectKey keyProperty="id" resultType="Long" order="AFTER">
+			 select LAST_INSERT_ID()
+		 </selectKey>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.bmw.seckill.model.SeckillAdmin" >
+		 UPDATE seckill_admin
+ 		 <set> 
+			<if test="loginName != null and loginName != ''">
+				 login_name = #{loginName},
+			</if>
+			<if test="password != null and password != ''">
+				 password = #{password},
+			</if>
+			<if test="name != null and name != ''">
+				 name = #{name},
+			</if>
+			<if test="ipRange != null and ipRange != ''">
+				 ip_range = #{ipRange},
+			</if>
+			<if test="createTime != null">
+				 create_time = #{createTime},
+			</if>
+
+ 		 </set>
+		 WHERE id = #{id}
+	</update>
+
+	<!-- list4Page 分页查询-->
+	<select id="list4Page" resultMap="SeckillAdmin">
+		 SELECT 
+		 <include refid="Base_Column_List" />
+		 from seckill_admin
+ 		 where 1=1  
+		<if test="record.id != null">
+			 and id = #{record.id} 
+		</if>
+		<if test="record.loginName != null and record.loginName != ''">
+			 and login_name = #{record.loginName} 
+		</if>
+		<if test="record.password != null and record.password != ''">
+			 and password = #{record.password} 
+		</if>
+		<if test="record.name != null and record.name != ''">
+			 and name = #{record.name} 
+		</if>
+		<if test="record.ipRange != null and record.ipRange != ''">
+			 and ip_range = #{record.ipRange} 
+		</if>
+		<if test="record.createTime != null">
+			 and create_time = #{record.createTime} 
+		</if>
+		<if test="commonQueryParam != null">
+			<if test="commonQueryParam.order != null ">
+				 order by #{commonQueryParam.order}			<if test="commonQueryParam.sort != null ">				 #{commonQueryParam.sort}			</if>
+			</if>
+			<if test="commonQueryParam.start != null  and commonQueryParam.pageSize != null">
+				 limit #{commonQueryParam.start}, #{commonQueryParam.pageSize}
+			</if>
+		</if>
+	</select>
+	<!-- count 总数-->
+	<select id="count" resultType="int">
+		 SELECT 
+		 count(1) 
+		 from seckill_admin
+ 		 where 1=1  
+		<if test="id != null">
+			 and id = #{id} 
+		</if>
+		<if test="loginName != null and loginName != ''">
+			 and login_name = #{loginName} 
+		</if>
+		<if test="password != null and password != ''">
+			 and password = #{password} 
+		</if>
+		<if test="name != null and name != ''">
+			 and name = #{name} 
+		</if>
+		<if test="ipRange != null and ipRange != ''">
+			 and ip_range = #{ipRange} 
+		</if>
+		<if test="createTime != null">
+			 and create_time = #{createTime} 
+		</if>
+	</select>
+	<!-- list 查询-->
+	<select id="list" resultMap="SeckillAdmin">
+		 SELECT 
+		 <include refid="Base_Column_List" />
+		 from seckill_admin
+ 		 where 1=1  
+		<if test="id != null">
+			 and id = #{id} 
+		</if>
+		<if test="loginName != null and loginName != ''">
+			 and login_name = #{loginName} 
+		</if>
+		<if test="password != null and password != ''">
+			 and password = #{password} 
+		</if>
+		<if test="name != null and name != ''">
+			 and name = #{name} 
+		</if>
+		<if test="ipRange != null and ipRange != ''">
+			 and ip_range = #{ipRange} 
+		</if>
+		<if test="createTime != null">
+			 and create_time = #{createTime} 
+		</if>
+	</select>
+</mapper>

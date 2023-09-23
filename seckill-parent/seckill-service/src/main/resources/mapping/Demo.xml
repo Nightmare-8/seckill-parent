@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bmw.seckill.dao.DemoDao">
+
+    <resultMap id="Demo" type="com.bmw.seckill.model.Demo">
+        <result column="text" property="text"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="is_enabled" property="isEnabled"/>
+    </resultMap>
+
+    <!-- 通用查询结果列-->
+    <sql id="Base_Column_List">
+        id
+        ,
+        text,
+        create_time,
+        update_time,
+        is_deleted,
+        is_enabled
+    </sql>
+
+    <!-- 查询（根据主键ID查询） -->
+    <select id="selectByPrimaryKey" resultMap="Demo" parameterType="java.lang.Long">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM demo
+        WHERE id = #{id}
+    </select>
+
+    <!--删除：根据主键ID删除-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE
+        FROM demo
+        WHERE id = #{id}
+    </delete>
+
+    <!-- 添加 -->
+    <insert id="insert" parameterType="com.bmw.seckill.model.Demo">
+        INSERT INTO demo
+        (
+        id,
+        text,
+        create_time,
+        update_time,
+        is_deleted,
+        is_enabled
+        )
+        VALUES
+        (
+        #{id},
+        #{text},
+        #{createTime},
+        #{updateTime},
+        #{isDeleted},
+        #{isEnabled}
+        )
+        <selectKey keyProperty="id" resultType="Long" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <!-- 修 改-->
+    <update id="updateByPrimaryKeySelective" parameterType="com.bmw.seckill.model.Demo">
+        UPDATE demo
+        <set>
+            <if test="text != null and text != ''">
+                text = #{text},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted},
+            </if>
+            <if test="isEnabled != null">
+                is_enabled = #{isEnabled},
+            </if>
+
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- list4Page 分页查询-->
+    <select id="list4Page" resultMap="Demo">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from demo
+        where 1=1
+        <if test="record.id != null">
+            and id = #{record.id}
+        </if>
+        <if test="record.text != null and record.text != ''">
+            and text = #{record.text}
+        </if>
+        <if test="record.createTime != null">
+            and create_time = #{record.createTime}
+        </if>
+        <if test="record.updateTime != null">
+            and update_time = #{record.updateTime}
+        </if>
+        <if test="record.isDeleted != null">
+            and is_deleted = #{record.isDeleted}
+        </if>
+        <if test="record.isEnabled != null">
+            and is_enabled = #{record.isEnabled}
+        </if>
+        <if test="commonQueryParam != null">
+            <if test="commonQueryParam.order != null ">
+                order by #{commonQueryParam.order}
+                <if test="commonQueryParam.sort != null ">#{commonQueryParam.sort}</if>
+            </if>
+            <if test="commonQueryParam.start != null  and commonQueryParam.pageSize != null">
+                limit #{commonQueryParam.start}, #{commonQueryParam.pageSize}
+            </if>
+        </if>
+    </select>
+    <!-- count 总数-->
+    <select id="count" resultType="int">
+        SELECT
+        count(*)
+        from demo
+        where 1=1
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="text != null and text != ''">
+            and text = #{text}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime}
+        </if>
+        <if test="isDeleted != null">
+            and is_deleted = #{isDeleted}
+        </if>
+        <if test="isEnabled != null">
+            and is_enabled = #{isEnabled}
+        </if>
+    </select>
+    <!-- list 查询-->
+    <select id="list" resultMap="Demo">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from demo
+        where 1=1
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="text != null and text != ''">
+            and text = #{text}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime}
+        </if>
+        <if test="isDeleted != null">
+            and is_deleted = #{isDeleted}
+        </if>
+        <if test="isEnabled != null">
+            and is_enabled = #{isEnabled}
+        </if>
+    </select>
+</mapper>
